@@ -11,7 +11,7 @@ displayFood('fish');
 const dispalyFishMeals = meals => {
   // console.log(meals);
   const fishInfo = document.getElementById('fish-info');
-  meals.forEach(meal => {
+  meals?.forEach(meal => {
     const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
@@ -29,10 +29,23 @@ const dispalyFishMeals = meals => {
 
 }
 
+// Spinner
+
+const toggleSpinner = dispalyStyle => {
+  document.getElementById('spinner').style.display = dispalyStyle;
+}
+
+// Search result
+const toggleSearchResult = dispalyStyle => {
+  document.getElementById('fish-info').style.display = dispalyStyle;
+}
+
 // Search Food
 
 const searchFood = () => {
   const searchField = document.getElementById('search-field');
+  toggleSpinner('block');
+  toggleSearchResult('none');
   const searchText = searchField.value;
   searchField.value = '';
   if (searchText == '') {
@@ -54,7 +67,7 @@ const searchFood = () => {
 const displaySearchResult = meals => {
   const searchResult = document.getElementById('fish-info');
   searchResult.textContent = '';
-  meals.forEach(meal => {
+  meals?.forEach(meal => {
     console.log(meal)
     const div = document.createElement('div');
     div.classList.add('col')
@@ -69,7 +82,9 @@ const displaySearchResult = meals => {
             `;
     searchResult.appendChild(div);
 
-  })
+  });
+  toggleSpinner('none');
+  toggleSearchResult('flex');
 }
 
 // single meal information
@@ -90,7 +105,7 @@ const displayMealDetails = meal => {
   div.innerHTML = `
 <img width="50px" src="${meal.strMealThumb}" class="card-img-top" alt="...">
 <div class="card-body">
-  <h5 class="card-title">${meal.strMeal}</h5>
+  <h5 class="card-title">${meal.strMeal ? meal.strMeal : ''}</h5>
   <p class="card-text">${meal.strInstructions.slice(0, 150)}.</p>
   <a href="${meal.strYoutube}" class="btn btn-primary">Go somewhere</a>
 </div>

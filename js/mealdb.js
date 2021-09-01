@@ -11,21 +11,22 @@ displayFood('fish');
 const dispalyFishMeals = meals => {
   // console.log(meals);
   const fishInfo = document.getElementById('fish-info');
+
+
   meals?.forEach(meal => {
     const div = document.createElement('div');
     div.classList.add('col');
     div.innerHTML = `
-        <div onclick="mealDetails(${meal.idMeal})" class="card">
-        <img width="200px" src="${meal.strMealThumb}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">${meal.strMeal}</h5>
-          <p class="card-text">${meal.strInstructions.slice(0, 200)}.</p>
+          <div onclick="mealDetails(${meal.idMeal})" class="card">
+          <img width="200px" src="${meal.strMealThumb}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">${meal.strMeal}</h5>
+            <p class="card-text">${meal.strInstructions.slice(0, 200)}.</p>
+          </div>
         </div>
-      </div>
-        `
+          `
     fishInfo.appendChild(div);
   })
-
 
 }
 
@@ -67,22 +68,27 @@ const searchFood = () => {
 const displaySearchResult = meals => {
   const searchResult = document.getElementById('fish-info');
   searchResult.textContent = '';
-  meals?.forEach(meal => {
-    console.log(meal)
-    const div = document.createElement('div');
-    div.classList.add('col')
-    div.innerHTML = `
-            <div onclick="mealDetails(${meal.idMeal})" class="card">
-            <img width="200px" src="${meal.strMealThumb}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">${meal.strMeal}</h5>
-              <p class="card-text">${meal.strInstructions.slice(0, 200)}.</p>
-            </div>
-          </div>
-            `;
-    searchResult.appendChild(div);
 
-  });
+  if (!meals) {
+    searchResult.innerHTML = `<p class="text-danger mx-auto">No result founded</p>`;
+  } else {
+    meals?.forEach(meal => {
+      // console.log(meal)
+      const div = document.createElement('div');
+      div.classList.add('col')
+      div.innerHTML = `
+              <div onclick="mealDetails(${meal.idMeal})" class="card">
+              <img width="200px" src="${meal.strMealThumb}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">${meal.strMeal}</h5>
+                <p class="card-text">${meal.strInstructions.slice(0, 200)}.</p>
+              </div>
+            </div>
+              `;
+      searchResult.appendChild(div);
+    });
+  }
+
   toggleSpinner('none');
   toggleSearchResult('flex');
 }
